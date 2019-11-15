@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Team10</string>
+    <string name="app_name">Team #10 - Smart Fan</string>
+    <string name="toggle_fan">Toggle Fan</string>
+    <string name="low_range">Low Speed</string>
+    <string name="medium_range">Medium Speed</string>
+    <string name="high_range">High Speed</string>
 </resources>

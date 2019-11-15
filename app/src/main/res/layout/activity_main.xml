@@ -1,17 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tempText"
-        android:layout_width="408dp"
-        android:layout_height="85dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
-        android:textSize="65sp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="7dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textColor="@color/white"
+        android:textSize="75sp" />
+
+    <TextView
+        android:id="@+id/toggleFanTest"
+        android:text="@string/toggle_fan"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <Switch
+        android:id="@+id/toggleFan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:scaleX="3"
+        android:scaleY="3" />
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="300dp">
+
+        <TextView
+            android:id="@+id/low_text"
+            android:text="@string/low_range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:paddingLeft="25dp" />
+
+        <io.apptik.widget.MultiSlider
+            android:id="@+id/tempRangeLow"
+            android:layout_width="250dp"
+            android:layout_height="25dp"
+            android:scaleY="1.5"
+            android:scaleX="1.5"
+            android:layout_gravity="center_horizontal"
+            app:thumbNumber="2"
+            app:stepsThumbsApart="5"
+            app:scaleMin="50"
+            app:scaleMax="100" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="365dp">
+
+        <TextView
+            android:id="@+id/medium_text"
+            android:text="@string/medium_range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:paddingLeft="25dp" />
+
+        <io.apptik.widget.MultiSlider
+            android:id="@+id/tempRangeMedium"
+            android:layout_width="250dp"
+            android:layout_height="25dp"
+            android:scaleY="1.5"
+            android:scaleX="1.5"
+            android:layout_gravity="center_horizontal"
+            app:thumbNumber="2"
+            app:drawThumbsApart="true"
+            app:scaleMin="50"
+            app:scaleMax="100" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="430dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/high_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="25dp"
+            android:text="@string/high_range"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <io.apptik.widget.MultiSlider
+            android:id="@+id/tempRangeHigh"
+            android:layout_width="250dp"
+            android:layout_height="25dp"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:layout_gravity="center_horizontal"
+            app:drawThumbsApart="true"
+            app:thumbNumber="2"
+            app:scaleMin="50"
+            app:scaleMax="100" />
+    </LinearLayout>
+</RelativeLayout>
