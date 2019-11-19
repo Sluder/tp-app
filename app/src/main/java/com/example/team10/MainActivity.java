@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import io.apptik.widget.MultiSlider;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
@@ -13,17 +16,19 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
-
     TextView tempText;
     Switch toggleFan;
 
     MultiSlider low_range;
     MultiSlider medium_range;
     MultiSlider high_range;
+    HashMap<String, String> ranges;
+    Button saveTempRanges;
 
     TextView low_text;
     TextView medium_text;
@@ -34,10 +39,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // UI initialization & handling
+        // UI initialization
+        ranges = new HashMap();
+        saveTempRanges = findViewById(R.id.saveTempRanges);
         tempText = findViewById(R.id.tempText);
         toggleFan = findViewById(R.id.toggleFan);
 
+        // Listeners
         low_text = findViewById(R.id.low_text);
         low_range = findViewById(R.id.tempRangeLow);
         low_range.setOnThumbValueChangeListener(new MultiSlider.OnThumbValueChangeListener() {
@@ -50,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     high = value;
                 }
+                ranges.put("low", low + "-" + high);
                 low_text.setText("Low Speed (" + low + "° - " + high + "°)");
             }
         });
@@ -66,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     high = value;
                 }
+                ranges.put("medium", low + "-" + high);
                 medium_text.setText("Medium Speed (" + low + "° - " + high + "°)");
             }
         });
@@ -82,20 +92,39 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     high = value;
                 }
+                ranges.put("high", low + "-" + high);
                 high_text.setText("High Speed (" + low + "° - " + high + "°)");
             }
         });
 
-        // Pull data from API for UI
+        // OnClick listeners
+        saveTempRanges.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateRanges();
+            }
+        });
+        toggleFan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, toggleFan.isChecked() ? "Turned fan ON" : "Turned fan OFF", Toast.LENGTH_SHORT).show();
+
+                updateSwitch();
+            }
+        });
+
         getTempRanges();
 
-        // Loop for UI & API updates
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 getLastTemp();
-
-                updateSwitch();
+            }
+        }, 0, 5000);
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                getSwitch();
             }
         }, 0, 2000);
     }
@@ -114,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("[API] Received temp. update");
                     try {
                         JSONObject apiResponse = new JSONObject(response);
-                        tempText.setText((apiResponse.get("F").toString().substring(0, 2) + "°"));
+
+                        String text = apiResponse.get("F").toString().substring(0, 2) + "°";
+                        tempText.setText(text);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -154,6 +185,28 @@ public class MainActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+                @Override
+                public void onFail(VolleyError volleyError) {
+                    System.out.println(volleyError.getMessage());
+                }
+            });
+    }
+
+    /**
+     * Updates API with new temp. ranges
+     */
+    public void updateRanges() {
+        String url = "?low=" + ranges.get("low") + "&medium=" + ranges.get("medium") + "&high=" + ranges.get("high");
+
+        new ApiRequest(this)
+            .setURL("http://tp-api.zsluder.com/api/temperature/ranges" + url)
+            .setMethod(Request.Method.POST)
+            .readFromURL()
+            .onListener(new ApiRequest.VolleyListener() {
+                @Override
+                public void onRecieve(String response) {
+                    System.out.println("[API] Updated temp. ranges");
                 }
                 @Override
                 public void onFail(VolleyError volleyError) {

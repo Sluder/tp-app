@@ -8,6 +8,13 @@
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
 
+    <View
+        android:layout_marginTop="5dp"
+        android:background="@drawable/circle"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:id="@+id/tempText"
         android:layout_width="match_parent"
@@ -15,7 +22,18 @@
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="75sp" />
+        android:textSize="75sp"
+        android:text="@string/degrees" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="80dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:text="@string/f" />
 
     <TextView
         android:id="@+id/toggleFanTest"
@@ -42,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="300dp">
+        android:layout_marginTop="250dp">
 
         <TextView
             android:id="@+id/low_text"
@@ -70,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="365dp">
+        android:layout_marginTop="315dp">
 
         <TextView
             android:id="@+id/medium_text"
@@ -97,7 +115,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="430dp"
+        android:layout_marginTop="380dp"
         android:orientation="vertical">
 
         <TextView
@@ -120,5 +138,22 @@
             app:thumbNumber="2"
             app:scaleMin="50"
             app:scaleMax="100" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="440dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/saveTempRanges"
+            android:background="@color/colorAccent"
+            android:textColor="#fff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginRight="20dp"
+            android:text="Save" />
     </LinearLayout>
 </RelativeLayout>

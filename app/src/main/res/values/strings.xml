@@ -4,4 +4,6 @@
     <string name="low_range">Low Speed</string>
     <string name="medium_range">Medium Speed</string>
     <string name="high_range">High Speed</string>
+    <string name="f">f</string>
+    <string name="degrees">0°</string>
 </resources>
